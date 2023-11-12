@@ -1,0 +1,34 @@
+{
+  "name": "@lazycuh/angular-confirmation-capture",
+  "description": "A singleton, global Angular service to programmatically show a confirmation box to capture an user's consent",
+  "version": "0.0.1",
+  "author": {
+    "name": "Lazy Cuh"
+  },
+  "peerDependencies": {
+    "@angular/common": "16 - 17",
+    "@angular/core": "16 - 17"
+  },
+  "keywords": [
+    "angular",
+    "angular confirmation",
+    "angular confirmation component",
+    "angular confirmation ui",
+    "angular confirmation service",
+    "confirmation",
+    "confirmation component",
+    "confirmation service",
+    "confirmation ui"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tinkeringprogrammer/angular-confirmation-capture"
+  },
+  "devDependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  }
+}
