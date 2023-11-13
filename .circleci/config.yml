@@ -129,6 +129,9 @@ workflows:
           requires:
             - installation
       - publish-to-npm-registry:
+          filters:
+            branches:
+              only: main
           context:
             - npm
           requires:
