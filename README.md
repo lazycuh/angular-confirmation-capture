@@ -1,6 +1,6 @@
 # angular-confirmation-capture
 
-A singleton, global Angular service to programmatically show a confirmation box to capture feedback from users.
+A singleton, global Angular service to programmatically show a confirmation box to capture an user's consent.
 
 ## Installation
 
