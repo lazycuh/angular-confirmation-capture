@@ -115,10 +115,7 @@ jobs:
 workflows:
   deployment:
     jobs:
-      - versioning:
-          filters:
-            branches:
-              only: main
+      - versioning
       - installation:
           requires:
             - versioning

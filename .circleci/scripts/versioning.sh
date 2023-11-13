@@ -2,6 +2,12 @@
 
 set -e
 
+if [ "$CIRCLE_BRANCH" != "main" ]
+then
+    echo "Not on main branch, skipping versioning."
+    exit 0
+fi
+
 LATEST_COMMIT_MESSAGE=$(git log -n 1 --format=%s | tr -d "\n")
 
 if [[ "$LATEST_COMMIT_MESSAGE" == "Bumped version to"* ]]; then
