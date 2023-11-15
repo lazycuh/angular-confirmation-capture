@@ -1,0 +1,148 @@
+$easing-function: cubic-bezier(0.04, 0.54, 0.25, 1);
+
+@function transition($property, $duration: 0.25s) {
+    @return $property $duration $easing-function;
+}
+
+.bbb-confirmation-capture,
+.bbb-confirmation-capture__backdrop {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+}
+
+.bbb-confirmation-capture {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 9999;
+    animation: 0.25s $easing-function forwards;
+
+    &.enter .bbb-confirmation-capture__body {
+        animation-name: confirmation-capture-animate-body-enter;
+    }
+
+    &.leave .bbb-confirmation-capture__body {
+        animation-name: confirmation-capture-animate-body-leave;
+    }
+
+    &.light {
+        --confirmation-capture-bg-color: #fff;
+        --confirmation-capture-text-color: #000;
+        --confirmation-capture-shadow: 0px 0.5rem 0.75rem rgba(0, 0, 0, 0.08), 0px 0.25rem 3rem rgba(0, 0, 0, 0.08);
+        --confirmation-capture-cancel-btn-hover-bg-color: #f7f5f5;
+        --confirmation-capture-cancel-btn-text-color: #000;
+        --confirmation-capture-confirm-btn-bg-color: #7ea1aa;
+        --confirmation-capture-confirm-btn-hover-bg-color: #607b82;
+        --confirmation-capture-confirm-btn-text-color: #fff;
+        --confirmation-capture-divider-color: rgba(0, 0, 0, 0.04);
+    }
+
+    &.dark {
+        --confirmation-capture-bg-color: #353535;
+        --confirmation-capture-text-color: #fff;
+        --confirmation-capture-shadow: 0px 0.5rem 0.75rem rgba(0, 0, 0, 0.15), 0px 0.25rem 3rem rgba(0, 0, 0, 0.15);
+        --confirmation-capture-cancel-btn-hover-bg-color: #444;
+        --confirmation-capture-cancel-btn-text-color: #e8d0ff;
+        --confirmation-capture-confirm-btn-bg-color: #1d6069;
+        --confirmation-capture-confirm-btn-hover-bg-color: #277e8a;
+        --confirmation-capture-confirm-btn-text-color: #fff;
+        --confirmation-capture-divider-color: rgba(255, 255, 255, 0.08);
+    }
+}
+
+@keyframes confirmation-capture-animate-body-enter {
+    from {
+        transform: translateY(60%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes confirmation-capture-animate-body-leave {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(60%);
+        opacity: 0;
+    }
+}
+
+.bbb-confirmation-capture__body {
+    display: flex;
+    position: fixed;
+    bottom: 20px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: 60px;
+    border-radius: 5px;
+    z-index: 10000;
+    animation: 0.25s $easing-function forwards;
+    max-width: 95vw;
+    line-height: 20px;
+    backface-visibility: hidden;
+    background-color: var(--confirmation-capture-bg-color);
+    box-shadow: var(--confirmation-capture-shadow);
+    color: var(--confirmation-capture-text-color);
+    font-size: 1.1rem;
+}
+
+.bbb-confirmation-capture__content {
+    padding: 20px 20px 20px 15px;
+    border-right: 1px solid var(--confirmation-capture-divider-color);
+    max-width: 450px;
+    min-width: 300px;
+    box-sizing: border-box;
+}
+
+.bbb-confirmation-capture__action-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    padding-right: 15px;
+}
+
+.bbb-confirmation-capture__action {
+    background-color: transparent;
+    border: none;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 8px 15px;
+    transition: transition(background-color);
+    font-family: inherit;
+
+    &.cancel {
+        color: var(--confirmation-capture-cancel-btn-text-color);
+        &:hover {
+            background-color: var(--confirmation-capture-cancel-btn-hover-bg-color);
+        }
+    }
+
+    &.confirm {
+        margin-left: 10px;
+        background-color: var(--confirmation-capture-confirm-btn-bg-color);
+        color: var(--confirmation-capture-confirm-btn-text-color);
+        &:hover {
+            background-color: var(--confirmation-capture-confirm-btn-hover-bg-color);
+        }
+    }
+}
+
+@media (max-width: 510px) {
+    .bbb-confirmation-capture__content {
+        min-width: auto;
+    }
+}

@@ -1,0 +1,24 @@
+<div
+    class="bbb-confirmation-capture__backdrop"
+    (pointerup)="_onBackdropPointerUp()"></div>
+
+<div class="bbb-confirmation-capture__body">
+    <span
+        class="bbb-confirmation-capture__content"
+        [innerHTML]="_content"></span>
+
+    <div class="bbb-confirmation-capture__action-container">
+        <button
+            type="button"
+            class="bbb-confirmation-capture__action cancel"
+            (click)="_onCancel()">
+            {{ _cancelButtonLabel }}
+        </button>
+        <button
+            type="button"
+            class="bbb-confirmation-capture__action confirm"
+            (click)="_onConfirm()">
+            {{ _confirmButtonLabel }}
+        </button>
+    </div>
+</div>
