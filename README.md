@@ -1,6 +1,21 @@
-# angular-confirmation-capture
+# angular-confirmation-capture [![](https://circleci.com/gh/babybeet/angular-confirmation-capture.svg?style=svg&logo=appveyor)](https://app.circleci.com/pipelines/github/babybeet/angular-confirmation-capture?branch=main)
 
 A singleton, global Angular service to programmatically show a confirmation box to capture an user's consent.
+
+## Table of contents
+
+<!-- toc -->
+
+- [Installation](#installation)
+- [Available APIs](#available-apis)
+  - [`ConfirmationCaptureService`](#confirmationcaptureservice)
+  - [`ConfirmationCaptureConfiguration`](#confirmationcaptureconfiguration)
+  - [`Theme`](#theme)
+- [Example Usage](#example-usage)
+  - [Code example](#code-example)
+  - [Result](#result)
+
+<!-- tocstop -->
 
 ## Installation
 
@@ -19,12 +34,11 @@ A singleton, global Angular service to programmatically show a confirmation box 
 
 ## Available APIs
 
-These are the symbols that are available from this package
+### `ConfirmationCaptureService`
 
-```typescript
-/**
- * A singleton service to programmatically show a confirmation box to capture an user's consent.
- */
+A singleton service to programmatically show a confirmation box to capture an user's consent.
+
+```ts
 class ConfirmationCaptureService {
   /**
    * Set the default theme that will be used for all confirmation captures created in the future.
@@ -43,12 +57,11 @@ class ConfirmationCaptureService {
 }
 ```
 
-<br/>
+### `ConfirmationCaptureConfiguration`
 
-```typescript
-/**
- * The configuration object for the confirmation capture to be created.
- */
+The configuration object for the confirmation capture to be created.
+
+```ts
 interface ConfirmationCaptureConfiguration {
   /**
    * The optional label for the cancel button. Default is `Cancel`.
@@ -82,9 +95,9 @@ interface ConfirmationCaptureConfiguration {
 }
 ```
 
-<br/>
+### `Theme`
 
-```typescript
+```ts
 const enum Theme {
   LIGHT = 'light',
   DARK = 'dark'

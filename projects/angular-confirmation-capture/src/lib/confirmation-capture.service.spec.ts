@@ -105,8 +105,8 @@ describe(ConfirmationCaptureService.name, () => {
 
     fixture.detectChanges();
 
-    expect(findElementBySelector(`${classSelectorPrefix}.dark`)).toBeNull();
-    expect(findElementBySelector(`${classSelectorPrefix}.light`)).not.toBeNull();
+    assertThat(`${classSelectorPrefix}.dark`).doesNotExist();
+    assertThat(`${classSelectorPrefix}.light`).exists();
 
     fireEvent(`${classSelectorPrefix}__action.cancel`, 'click');
 
