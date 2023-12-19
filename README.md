@@ -89,7 +89,7 @@ interface ConfirmationCaptureConfiguration {
   dismissible?: boolean;
 
   /**
-   * The optional theme for the floating box. Default is {@link Theme.LIGHT Theme.LIGHT}.
+   * The optional theme for the floating box. Default is `light`.
    */
   theme?: Theme;
 }
@@ -98,10 +98,7 @@ interface ConfirmationCaptureConfiguration {
 ### `Theme`
 
 ```ts
-const enum Theme {
-  LIGHT = 'light',
-  DARK = 'dark'
-}
+type Theme = 'dark' | 'light';
 ```
 
 <br/>

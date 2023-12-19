@@ -11,7 +11,6 @@ import {
 
 import { ConfirmationCaptureService } from './confirmation-capture.service';
 import { ConfirmationCaptureConfiguration } from './confirmation-capture-configuration';
-import { Theme } from './theme';
 
 @Component({
   selector: 'bbb-test',
@@ -112,7 +111,7 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(1000);
 
-    ConfirmationCaptureService.setDefaultTheme(Theme.DARK);
+    ConfirmationCaptureService.setDefaultTheme('dark');
 
     testComponentRenderer.openConfirmationCapture();
 
@@ -122,12 +121,12 @@ describe(ConfirmationCaptureService.name, () => {
     assertThat(`${classSelectorPrefix}.dark`).exists();
 
     // Set back to the expected default
-    ConfirmationCaptureService.setDefaultTheme(Theme.LIGHT);
+    ConfirmationCaptureService.setDefaultTheme('light');
   });
 
   it('Should render with the provided theme', async () => {
     testComponentRenderer.openConfirmationCapture({
-      theme: Theme.DARK
+      theme: 'dark'
     });
 
     fixture.detectChanges();
@@ -140,7 +139,7 @@ describe(ConfirmationCaptureService.name, () => {
     await delayBy(1000);
 
     testComponentRenderer.openConfirmationCapture({
-      theme: Theme.LIGHT
+      theme: 'light'
     });
 
     fixture.detectChanges();

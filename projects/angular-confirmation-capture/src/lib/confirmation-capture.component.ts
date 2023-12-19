@@ -45,7 +45,7 @@ export class ConfirmationCaptureComponent {
    *
    * @private Used by template.
    */
-  _theme = Theme.LIGHT;
+  _theme: Theme = 'light';
 
   _className?: string;
 
@@ -57,7 +57,7 @@ export class ConfirmationCaptureComponent {
   private _onCancelListener?: () => void;
 
   open(confirmationCaptureConfiguration: ConfirmationCaptureConfiguration) {
-    const defaultTheme = Theme.LIGHT;
+    const defaultTheme: Theme = 'light';
     const defaultCancelButtonLabel = 'Cancel';
     const defaultConfirmButtonLabel = 'Confirm';
 
