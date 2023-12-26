@@ -268,4 +268,66 @@ describe(ConfirmationCaptureService.name, () => {
     expect(onConfirmSpy).toHaveBeenCalledTimes(1);
     expect(onConfirmSpy).toHaveBeenCalledWith(true);
   });
+
+  it('Should use "Cancel" as label for cancel button by default', () => {
+    testComponentRenderer.openConfirmationCapture();
+
+    fixture.detectChanges();
+
+    assertThat(`${classSelectorPrefix}__action.cancel`).hasTextContentMatching('Cancel');
+  });
+
+  it('Should be able to configure a different default label for cancel button', async () => {
+    testComponentRenderer.openConfirmationCapture();
+
+    fixture.detectChanges();
+
+    assertThat(`${classSelectorPrefix}__action.cancel`).hasTextContentMatching('Cancel');
+
+    fireEvent(`${classSelectorPrefix}__action.cancel`, 'click');
+
+    await delayBy(1000);
+
+    ConfirmationCaptureService.setDefaultCancelButtonLabel('Dismiss');
+
+    testComponentRenderer.openConfirmationCapture();
+
+    fixture.detectChanges();
+
+    assertThat(`${classSelectorPrefix}__action.cancel`).hasTextContentMatching('Dismiss');
+
+    // Set back to the expected default
+    ConfirmationCaptureService.setDefaultCancelButtonLabel('Cancel');
+  });
+
+  it('Should use "Confirm" as label for confirm button by default', () => {
+    testComponentRenderer.openConfirmationCapture();
+
+    fixture.detectChanges();
+
+    assertThat(`${classSelectorPrefix}__action.confirm`).hasTextContentMatching('Confirm');
+  });
+
+  it('Should be able to configure a different default label for confirm button', async () => {
+    testComponentRenderer.openConfirmationCapture();
+
+    fixture.detectChanges();
+
+    assertThat(`${classSelectorPrefix}__action.confirm`).hasTextContentMatching('Confirm');
+
+    fireEvent(`${classSelectorPrefix}__action.confirm`, 'click');
+
+    await delayBy(1000);
+
+    ConfirmationCaptureService.setDefaultConfirmButtonLabel('Yes');
+
+    testComponentRenderer.openConfirmationCapture();
+
+    fixture.detectChanges();
+
+    assertThat(`${classSelectorPrefix}__action.confirm`).hasTextContentMatching('Yes');
+
+    // Set back to the expected default
+    ConfirmationCaptureService.setDefaultConfirmButtonLabel('Confirm');
+  });
 });

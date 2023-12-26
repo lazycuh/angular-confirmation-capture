@@ -12,6 +12,8 @@ import { Theme } from './theme';
 })
 export class ConfirmationCaptureService {
   private static _defaultTheme: Theme = 'light';
+  private static _defaultCancelButtonLabel = 'Cancel';
+  private static _defaultConfirmButtonLabel = 'Confirm';
 
   constructor(private readonly _applicationRef: ApplicationRef) {}
 
@@ -22,6 +24,20 @@ export class ConfirmationCaptureService {
    */
   static setDefaultTheme(theme: Theme) {
     ConfirmationCaptureService._defaultTheme = theme;
+  }
+
+  /**
+   * Set the default label for the cancel button. Default is `Cancel`.
+   */
+  static setDefaultCancelButtonLabel(label: string) {
+    ConfirmationCaptureService._defaultCancelButtonLabel = label;
+  }
+
+  /**
+   * Set the default label for the confirm button. Default is `Confirm`.
+   */
+  static setDefaultConfirmButtonLabel(label: string) {
+    ConfirmationCaptureService._defaultConfirmButtonLabel = label;
   }
 
   /**
@@ -60,6 +76,15 @@ export class ConfirmationCaptureService {
       if (confirmationCaptureConfiguration.theme === undefined) {
         confirmationCaptureConfiguration.theme = ConfirmationCaptureService._defaultTheme;
       }
+
+      if (confirmationCaptureConfiguration.cancelButtonLabel === undefined) {
+        confirmationCaptureConfiguration.cancelButtonLabel = ConfirmationCaptureService._defaultCancelButtonLabel;
+      }
+
+      if (confirmationCaptureConfiguration.confirmButtonLabel === undefined) {
+        confirmationCaptureConfiguration.confirmButtonLabel = ConfirmationCaptureService._defaultConfirmButtonLabel;
+      }
+
       confirmationCaptureComponent.open(confirmationCaptureConfiguration);
     });
   }

@@ -48,6 +48,16 @@ class ConfirmationCaptureService {
   static setDefaultTheme(theme: Theme): void;
 
   /**
+   * Set the default label for the cancel button. Default is `Cancel`.
+   */
+  static setDefaultCancelButtonLabel(label: string): void;
+
+  /**
+   * Set the default label for the confirm button. Default is `Confirm`.
+   */
+  static setDefaultConfirmButtonLabel(label: string): void;
+
+  /**
    * Open a confirmation capture using the provided configuration. Return a promise that
    * resolves to `true` if confirm button is clicked, `false` otherwise.
    *
