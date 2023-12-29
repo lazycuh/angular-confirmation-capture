@@ -123,6 +123,7 @@ $easing-function: cubic-bezier(0.04, 0.54, 0.25, 1);
     padding: 8px 15px;
     transition: transition(background-color);
     font-family: inherit;
+    white-space: nowrap;
 
     &.cancel {
         color: var(--confirmation-capture-cancel-btn-text-color);
