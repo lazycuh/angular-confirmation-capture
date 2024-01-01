@@ -84,7 +84,7 @@ export class ConfirmationCaptureComponent {
   /**
    * @private Used by template.
    */
-  _onBackdropPointerUp() {
+  protected _onBackdropClick() {
     if (this._dismissible) {
       this._enter = false;
       this._onCancelListener?.();
@@ -94,7 +94,7 @@ export class ConfirmationCaptureComponent {
   /**
    * @private Used by template.
    */
-  _onCancel(event: Event) {
+  protected _onCancel(event: Event) {
     this._enter = false;
     this._onCancelListener?.();
     event.stopPropagation();
@@ -103,7 +103,7 @@ export class ConfirmationCaptureComponent {
   /**
    * @private Used by template.
    */
-  _onConfirm(event: Event) {
+  protected _onConfirm(event: Event) {
     this._enter = false;
     this._onConfirmListener?.();
     event.stopPropagation();

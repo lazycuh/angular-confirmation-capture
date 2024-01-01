@@ -167,7 +167,7 @@ describe(ConfirmationCaptureService.name, () => {
 
     assertThat(`${classSelectorPrefix}__content`.trim()).hasTextContent('Hello World');
 
-    fireEvent(`${classSelectorPrefix}__backdrop`, 'pointerup');
+    fireEvent(`${classSelectorPrefix}__backdrop`, 'click');
 
     fixture.detectChanges();
 
@@ -186,7 +186,7 @@ describe(ConfirmationCaptureService.name, () => {
 
     assertThat(`${classSelectorPrefix}__content`).hasTextContent('Hello World');
 
-    fireEvent(`${classSelectorPrefix}__backdrop`, 'pointerup');
+    fireEvent(`${classSelectorPrefix}__backdrop`, 'click');
 
     fixture.detectChanges();
 
