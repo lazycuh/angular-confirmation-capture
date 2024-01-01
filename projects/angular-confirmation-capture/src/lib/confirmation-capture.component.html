@@ -11,13 +11,13 @@
         <button
             type="button"
             class="bbb-confirmation-capture__action cancel"
-            (click)="_onCancel()">
+            (click)="_onCancel($event)">
             {{ _cancelButtonLabel }}
         </button>
         <button
             type="button"
             class="bbb-confirmation-capture__action confirm"
-            (click)="_onConfirm()">
+            (click)="_onConfirm($event)">
             {{ _confirmButtonLabel }}
         </button>
     </div>

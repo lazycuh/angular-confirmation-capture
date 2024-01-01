@@ -94,16 +94,18 @@ export class ConfirmationCaptureComponent {
   /**
    * @private Used by template.
    */
-  _onCancel() {
+  _onCancel(event: Event) {
     this._enter = false;
     this._onCancelListener?.();
+    event.stopPropagation();
   }
 
   /**
    * @private Used by template.
    */
-  _onConfirm() {
+  _onConfirm(event: Event) {
     this._enter = false;
     this._onConfirmListener?.();
+    event.stopPropagation();
   }
 }
