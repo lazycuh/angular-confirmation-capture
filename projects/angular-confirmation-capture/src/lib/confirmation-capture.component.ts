@@ -57,19 +57,15 @@ export class ConfirmationCaptureComponent {
   private _onCancelListener?: () => void;
 
   open(confirmationCaptureConfiguration: ConfirmationCaptureConfiguration) {
-    const defaultTheme: Theme = 'light';
-    const defaultCancelButtonLabel = 'Cancel';
-    const defaultConfirmButtonLabel = 'Confirm';
-
-    this._cancelButtonLabel = confirmationCaptureConfiguration.cancelButtonLabel || defaultCancelButtonLabel;
+    this._cancelButtonLabel = confirmationCaptureConfiguration.cancelButtonLabel;
     this._className = confirmationCaptureConfiguration.className;
-    this._confirmButtonLabel = confirmationCaptureConfiguration.confirmButtonLabel || defaultConfirmButtonLabel;
+    this._confirmButtonLabel = confirmationCaptureConfiguration.confirmButtonLabel;
     this._content = confirmationCaptureConfiguration.content;
     this._dismissible =
       confirmationCaptureConfiguration.dismissible !== undefined
         ? confirmationCaptureConfiguration.dismissible
         : this._dismissible;
-    this._theme = confirmationCaptureConfiguration.theme || defaultTheme;
+    this._theme = confirmationCaptureConfiguration.theme as Theme;
     this._enter = true;
   }
 
@@ -81,31 +77,26 @@ export class ConfirmationCaptureComponent {
     this._onCancelListener = fn;
   }
 
-  /**
-   * @private Used by template.
-   */
-  protected _onBackdropClick() {
+  protected _onBackdropClick(event: Event) {
+    event.stopPropagation();
+
     if (this._dismissible) {
       this._enter = false;
       this._onCancelListener?.();
     }
   }
 
-  /**
-   * @private Used by template.
-   */
   protected _onCancel(event: Event) {
+    event.stopPropagation();
+
     this._enter = false;
     this._onCancelListener?.();
-    event.stopPropagation();
   }
 
-  /**
-   * @private Used by template.
-   */
   protected _onConfirm(event: Event) {
+    event.stopPropagation();
+
     this._enter = false;
     this._onConfirmListener?.();
-    event.stopPropagation();
   }
 }

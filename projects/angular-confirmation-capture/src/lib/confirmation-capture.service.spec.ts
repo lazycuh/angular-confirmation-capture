@@ -330,4 +330,29 @@ describe(ConfirmationCaptureService.name, () => {
     // Set back to the expected default
     ConfirmationCaptureService.setDefaultConfirmButtonLabel('Confirm');
   });
+
+  it('Should stop click events from bubbling to window', async () => {
+    const clickHandlerSpy = jasmine.createSpy();
+
+    const stopPropagationSpy = spyOn(CustomEvent.prototype, 'stopPropagation').and.callThrough();
+
+    window.addEventListener('click', clickHandlerSpy, false);
+
+    testComponentRenderer.openConfirmationCapture();
+
+    fixture.detectChanges();
+
+    await delayBy(1000);
+
+    assertThat(`${classSelectorPrefix}__content`).hasTextContent('Are you sure?');
+
+    fireEvent(`${classSelectorPrefix}__backdrop`, 'click');
+
+    fixture.detectChanges();
+
+    expect(clickHandlerSpy).not.toHaveBeenCalled();
+    expect(stopPropagationSpy).toHaveBeenCalledTimes(1);
+
+    window.removeEventListener('click', clickHandlerSpy, false);
+  });
 });
