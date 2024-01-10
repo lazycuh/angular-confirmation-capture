@@ -1,7 +1,7 @@
 {
   "name": "@babybeet/angular-confirmation-capture",
   "description": "A singleton, global Angular service to programmatically show a confirmation box to capture an user's consent",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
