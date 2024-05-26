@@ -10,9 +10,9 @@ import { Theme } from './theme';
   host: {
     '[class]':
       // eslint-disable-next-line max-len
-      '"bbb-confirmation-capture " + (_theme + " ") + (_enter ? "enter" : "leave") + (_className ? " " + _className : "")'
+      '"lc-confirmation-capture " + (_theme + " ") + (_enter ? "enter" : "leave") + (_className ? " " + _className : "")'
   },
-  selector: 'bbb-confirmation-capture',
+  selector: 'lc-confirmation-capture',
   styleUrls: ['./confirmation-capture.component.scss'],
   templateUrl: './confirmation-capture.component.html'
 })

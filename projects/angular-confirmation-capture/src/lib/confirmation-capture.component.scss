@@ -4,8 +4,8 @@ $easing-function: cubic-bezier(0.04, 0.54, 0.25, 1);
     @return $property $duration $easing-function;
 }
 
-.bbb-confirmation-capture,
-.bbb-confirmation-capture__backdrop {
+.lc-confirmation-capture,
+.lc-confirmation-capture__backdrop {
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -13,18 +13,18 @@ $easing-function: cubic-bezier(0.04, 0.54, 0.25, 1);
     top: 0;
 }
 
-.bbb-confirmation-capture {
+.lc-confirmation-capture {
     display: flex;
     align-items: flex-end;
     justify-content: center;
     z-index: 9999;
     animation: 0.25s $easing-function forwards;
 
-    &.enter .bbb-confirmation-capture__body {
+    &.enter .lc-confirmation-capture__body {
         animation-name: confirmation-capture-animate-body-enter;
     }
 
-    &.leave .bbb-confirmation-capture__body {
+    &.leave .lc-confirmation-capture__body {
         animation-name: confirmation-capture-animate-body-leave;
     }
 
@@ -77,7 +77,7 @@ $easing-function: cubic-bezier(0.04, 0.54, 0.25, 1);
     }
 }
 
-.bbb-confirmation-capture__body {
+.lc-confirmation-capture__body {
     display: flex;
     position: fixed;
     bottom: 20px;
@@ -97,7 +97,7 @@ $easing-function: cubic-bezier(0.04, 0.54, 0.25, 1);
     font-size: 1.1rem;
 }
 
-.bbb-confirmation-capture__content {
+.lc-confirmation-capture__content {
     padding: 20px 20px 20px 15px;
     border-right: 1px solid var(--confirmation-capture-divider-color);
     max-width: 450px;
@@ -107,7 +107,7 @@ $easing-function: cubic-bezier(0.04, 0.54, 0.25, 1);
     overflow-wrap: anywhere;
 }
 
-.bbb-confirmation-capture__action-container {
+.lc-confirmation-capture__action-container {
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
@@ -116,7 +116,7 @@ $easing-function: cubic-bezier(0.04, 0.54, 0.25, 1);
     padding-right: 15px;
 }
 
-.bbb-confirmation-capture__action {
+.lc-confirmation-capture__action {
     background-color: transparent;
     border: none;
     font-size: 0.95rem;
@@ -145,7 +145,7 @@ $easing-function: cubic-bezier(0.04, 0.54, 0.25, 1);
 }
 
 @media (max-width: 510px) {
-    .bbb-confirmation-capture__content {
+    .lc-confirmation-capture__content {
         min-width: auto;
     }
 }

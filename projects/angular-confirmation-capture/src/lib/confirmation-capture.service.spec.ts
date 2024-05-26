@@ -13,7 +13,7 @@ import { ConfirmationCaptureService } from './confirmation-capture.service';
 import { ConfirmationCaptureConfiguration } from './confirmation-capture-configuration';
 
 @Component({
-  selector: 'bbb-test',
+  selector: 'lc-test',
   template: `<ng-container></ng-container>`
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
@@ -29,7 +29,7 @@ export class TestComponentRenderer {
 }
 
 describe(ConfirmationCaptureService.name, () => {
-  const classSelectorPrefix = '.bbb-confirmation-capture';
+  const classSelectorPrefix = '.lc-confirmation-capture';
   let fixture: ComponentFixture<TestComponentRenderer>;
   let testComponentRenderer: TestComponentRenderer;
 

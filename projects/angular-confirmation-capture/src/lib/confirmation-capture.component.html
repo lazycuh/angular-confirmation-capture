@@ -1,24 +1,24 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div
-    class="bbb-confirmation-capture__backdrop"
+    class="lc-confirmation-capture__backdrop"
     (click)="_onBackdropClick($event)"></div>
 
-<div class="bbb-confirmation-capture__body">
+<div class="lc-confirmation-capture__body">
     <span
-        class="bbb-confirmation-capture__content"
+        class="lc-confirmation-capture__content"
         [innerHTML]="_content"></span>
 
-    <div class="bbb-confirmation-capture__action-container">
+    <div class="lc-confirmation-capture__action-container">
         <button
             type="button"
-            class="bbb-confirmation-capture__action cancel"
+            class="lc-confirmation-capture__action cancel"
             (click)="_onCancel($event)">
             {{ _cancelButtonLabel }}
         </button>
         <button
             type="button"
-            class="bbb-confirmation-capture__action confirm"
+            class="lc-confirmation-capture__action confirm"
             (click)="_onConfirm($event)">
             {{ _confirmButtonLabel }}
         </button>
