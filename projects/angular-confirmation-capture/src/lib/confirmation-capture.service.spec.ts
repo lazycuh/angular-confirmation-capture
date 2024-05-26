@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/quotes */
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   assertThat,
   delayBy,
@@ -33,14 +33,12 @@ describe(ConfirmationCaptureService.name, () => {
   let fixture: ComponentFixture<TestComponentRenderer>;
   let testComponentRenderer: TestComponentRenderer;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [TestComponentRenderer],
       providers: [ConfirmationCaptureService]
     }).compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(TestComponentRenderer);
     testComponentRenderer = fixture.componentInstance;
     fixture.detectChanges();

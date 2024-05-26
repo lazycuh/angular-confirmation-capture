@@ -6,6 +6,7 @@ A singleton, global Angular service to programmatically show a confirmation box 
 
 <!-- toc -->
 
+- [Angular version compatibility](#angular-version-compatibility)
 - [Installation](#installation)
 - [Available APIs](#available-apis)
   - [`ConfirmationCaptureService`](#confirmationcaptureservice)
@@ -16,6 +17,10 @@ A singleton, global Angular service to programmatically show a confirmation box 
   - [Result](#result)
 
 <!-- tocstop -->
+
+## Angular version compatibility
+
+- 16+
 
 ## Installation
 
