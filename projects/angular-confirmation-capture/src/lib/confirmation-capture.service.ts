@@ -69,10 +69,6 @@ export class ConfirmationCaptureService {
         };
       });
 
-      this._applicationRef.attachView(confirmationCaptureComponentRef.hostView);
-
-      document.body.appendChild(confirmationCaptureComponentRef.location.nativeElement);
-
       if (confirmationCaptureConfiguration.theme === undefined) {
         confirmationCaptureConfiguration.theme = ConfirmationCaptureService._defaultTheme;
       }
@@ -86,6 +82,10 @@ export class ConfirmationCaptureService {
       }
 
       confirmationCaptureComponent.open(confirmationCaptureConfiguration);
+
+      this._applicationRef.attachView(confirmationCaptureComponentRef.hostView);
+
+      document.body.appendChild(confirmationCaptureComponentRef.location.nativeElement);
     });
   }
 }

@@ -48,51 +48,51 @@ describe(ConfirmationCaptureService.name, () => {
     fixture.destroy();
   });
 
-  it('Should render a confirmation capture with the provided content', () => {
+  it('Should render a confirmation capture with the provided content', async () => {
     testComponentRenderer.openConfirmationCapture({
       content: 'Do you want to proceed?'
     });
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     assertThat(`${classSelectorPrefix}__content`).hasTextContent('Do you want to proceed?');
   });
 
-  it('Should render a confirmation capture with the provided content as HTML', () => {
+  it('Should render a confirmation capture with the provided content as HTML', async () => {
     testComponentRenderer.openConfirmationCapture({
       content: '<strong>Do you want to proceed?</strong>'
     });
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     assertThat(`${classSelectorPrefix}__content`).hasInnerHtml('<strong>Do you want to proceed?</strong>');
     assertThat(`${classSelectorPrefix}__content`).hasTextContent('Do you want to proceed?');
   });
 
-  it(`Should render a confirmation capture whose cancel button's label has the provided value`, () => {
+  it(`Should render a confirmation capture whose cancel button's label has the provided value`, async () => {
     testComponentRenderer.openConfirmationCapture({
       cancelButtonLabel: 'Dismiss'
     });
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     assertThat(`${classSelectorPrefix}__action.cancel`).hasTextContentMatching('Dismiss');
   });
 
-  it(`Should render a confirmation capture whose confirm button's label has the provided value`, () => {
+  it(`Should render a confirmation capture whose confirm button's label has the provided value`, async () => {
     testComponentRenderer.openConfirmationCapture({
       confirmButtonLabel: 'Agree'
     });
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     assertThat(`${classSelectorPrefix}__action.confirm`).hasTextContentMatching('Agree');
   });
 
-  it('Should use light theme by default', () => {
+  it('Should use light theme by default', async () => {
     testComponentRenderer.openConfirmationCapture();
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     assertThat(`${classSelectorPrefix}.light`).exists();
   });
@@ -100,20 +100,20 @@ describe(ConfirmationCaptureService.name, () => {
   it('Should be able to configure a different default theme', async () => {
     testComponentRenderer.openConfirmationCapture();
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     assertThat(`${classSelectorPrefix}.dark`).doesNotExist();
     assertThat(`${classSelectorPrefix}.light`).exists();
 
     fireEvent(`${classSelectorPrefix}__action.cancel`, 'click');
 
-    await delayBy(1000);
+    await delayBy(500);
 
     ConfirmationCaptureService.setDefaultTheme('dark');
 
     testComponentRenderer.openConfirmationCapture();
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     assertThat(`${classSelectorPrefix}.light`).doesNotExist();
     assertThat(`${classSelectorPrefix}.dark`).exists();
@@ -127,31 +127,31 @@ describe(ConfirmationCaptureService.name, () => {
       theme: 'dark'
     });
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     assertThat(`${classSelectorPrefix}.light`).doesNotExist();
     assertThat(`${classSelectorPrefix}.dark`).exists();
 
     fireEvent(`${classSelectorPrefix}__action.cancel`, 'click');
 
-    await delayBy(1000);
+    await delayBy(500);
 
     testComponentRenderer.openConfirmationCapture({
       theme: 'light'
     });
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     assertThat(`${classSelectorPrefix}.dark`).doesNotExist();
     assertThat(`${classSelectorPrefix}.light`).exists();
   });
 
-  it('Should add the provided class name', () => {
+  it('Should add the provided class name', async () => {
     testComponentRenderer.openConfirmationCapture({
       className: 'hello-world'
     });
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     assertThat(`${classSelectorPrefix}.hello-world`).exists();
   });
@@ -161,7 +161,7 @@ describe(ConfirmationCaptureService.name, () => {
       content: 'Hello World'
     });
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     assertThat(`${classSelectorPrefix}__content`.trim()).hasTextContent('Hello World');
 
@@ -169,7 +169,7 @@ describe(ConfirmationCaptureService.name, () => {
 
     fixture.detectChanges();
 
-    await delayBy(1000);
+    await delayBy(500);
 
     assertThat(classSelectorPrefix).doesNotExist();
   });
@@ -180,7 +180,7 @@ describe(ConfirmationCaptureService.name, () => {
       dismissible: false
     });
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     assertThat(`${classSelectorPrefix}__content`).hasTextContent('Hello World');
 
@@ -188,15 +188,15 @@ describe(ConfirmationCaptureService.name, () => {
 
     fixture.detectChanges();
 
-    await delayBy(1000);
+    await delayBy(500);
 
     expect(findElementBySelector(classSelectorPrefix)).not.toBeNull();
   });
 
-  it('Should insert the rendered confirmation capture as the direct child of body element', () => {
+  it('Should insert the rendered confirmation capture as the direct child of body element', async () => {
     testComponentRenderer.openConfirmationCapture();
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     expect(document.body.lastElementChild).toEqual(getElementBySelector(classSelectorPrefix));
   });
@@ -204,7 +204,7 @@ describe(ConfirmationCaptureService.name, () => {
   it('Should close opened confirmation capture after cancel button is clicked', async () => {
     testComponentRenderer.openConfirmationCapture();
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     assertThat(classSelectorPrefix).exists();
 
@@ -212,7 +212,7 @@ describe(ConfirmationCaptureService.name, () => {
 
     fixture.detectChanges();
 
-    await delayBy(1000);
+    await delayBy(500);
 
     assertThat(classSelectorPrefix).doesNotExist();
   });
@@ -222,7 +222,7 @@ describe(ConfirmationCaptureService.name, () => {
 
     testComponentRenderer.openConfirmationCapture().then(onCancelSpy);
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     fireEvent(`${classSelectorPrefix}__action.cancel`, 'click');
 
@@ -237,7 +237,7 @@ describe(ConfirmationCaptureService.name, () => {
   it('Should close opened confirmation capture after confirm button is clicked', async () => {
     testComponentRenderer.openConfirmationCapture();
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     expect(findElementBySelector(classSelectorPrefix)).not.toBeNull();
 
@@ -245,7 +245,7 @@ describe(ConfirmationCaptureService.name, () => {
 
     fixture.detectChanges();
 
-    await delayBy(1000);
+    await delayBy(500);
 
     assertThat(classSelectorPrefix).doesNotExist();
   });
@@ -255,22 +255,22 @@ describe(ConfirmationCaptureService.name, () => {
 
     testComponentRenderer.openConfirmationCapture().then(onConfirmSpy);
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     fireEvent(`${classSelectorPrefix}__action.confirm`, 'click');
 
     fixture.detectChanges();
 
-    await delayBy(1000);
+    await delayBy(500);
 
     expect(onConfirmSpy).toHaveBeenCalledTimes(1);
     expect(onConfirmSpy).toHaveBeenCalledWith(true);
   });
 
-  it('Should use "Cancel" as label for cancel button by default', () => {
+  it('Should use "Cancel" as label for cancel button by default', async () => {
     testComponentRenderer.openConfirmationCapture();
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     assertThat(`${classSelectorPrefix}__action.cancel`).hasTextContentMatching('Cancel');
   });
@@ -278,19 +278,19 @@ describe(ConfirmationCaptureService.name, () => {
   it('Should be able to configure a different default label for cancel button', async () => {
     testComponentRenderer.openConfirmationCapture();
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     assertThat(`${classSelectorPrefix}__action.cancel`).hasTextContentMatching('Cancel');
 
     fireEvent(`${classSelectorPrefix}__action.cancel`, 'click');
 
-    await delayBy(1000);
+    await delayBy(500);
 
     ConfirmationCaptureService.setDefaultCancelButtonLabel('Dismiss');
 
     testComponentRenderer.openConfirmationCapture();
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     assertThat(`${classSelectorPrefix}__action.cancel`).hasTextContentMatching('Dismiss');
 
@@ -309,19 +309,19 @@ describe(ConfirmationCaptureService.name, () => {
   it('Should be able to configure a different default label for confirm button', async () => {
     testComponentRenderer.openConfirmationCapture();
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     assertThat(`${classSelectorPrefix}__action.confirm`).hasTextContentMatching('Confirm');
 
     fireEvent(`${classSelectorPrefix}__action.confirm`, 'click');
 
-    await delayBy(1000);
+    await delayBy(500);
 
     ConfirmationCaptureService.setDefaultConfirmButtonLabel('Yes');
 
     testComponentRenderer.openConfirmationCapture();
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     assertThat(`${classSelectorPrefix}__action.confirm`).hasTextContentMatching('Yes');
 
@@ -338,15 +338,13 @@ describe(ConfirmationCaptureService.name, () => {
 
     testComponentRenderer.openConfirmationCapture();
 
-    fixture.detectChanges();
-
-    await delayBy(1000);
+    await delayBy(16);
 
     assertThat(`${classSelectorPrefix}__content`).hasTextContent('Are you sure?');
 
     fireEvent(`${classSelectorPrefix}__backdrop`, 'click');
 
-    fixture.detectChanges();
+    await delayBy(16);
 
     expect(clickHandlerSpy).not.toHaveBeenCalled();
     expect(stopPropagationSpy).toHaveBeenCalledTimes(1);
