@@ -7,20 +7,20 @@
 <div class="lc-confirmation-capture__body">
     <span
         class="lc-confirmation-capture__content"
-        [innerHTML]="_content"></span>
+        [innerHTML]="_content()"></span>
 
     <div class="lc-confirmation-capture__action-container">
         <button
             type="button"
             class="lc-confirmation-capture__action cancel"
             (click)="_onCancel($event)">
-            {{ _cancelButtonLabel }}
+            {{ _cancelButtonLabel() }}
         </button>
         <button
             type="button"
             class="lc-confirmation-capture__action confirm"
             (click)="_onConfirm($event)">
-            {{ _confirmButtonLabel }}
+            {{ _confirmButtonLabel() }}
         </button>
     </div>
 </div>

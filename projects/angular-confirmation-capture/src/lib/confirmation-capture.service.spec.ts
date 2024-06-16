@@ -167,8 +167,6 @@ describe(ConfirmationCaptureService.name, () => {
 
     fireEvent(`${classSelectorPrefix}__backdrop`, 'click');
 
-    fixture.detectChanges();
-
     await delayBy(500);
 
     assertThat(classSelectorPrefix).doesNotExist();
@@ -185,8 +183,6 @@ describe(ConfirmationCaptureService.name, () => {
     assertThat(`${classSelectorPrefix}__content`).hasTextContent('Hello World');
 
     fireEvent(`${classSelectorPrefix}__backdrop`, 'click');
-
-    fixture.detectChanges();
 
     await delayBy(500);
 
