@@ -1,5 +1,5 @@
 {
-  "name": "@babybeet/angular-confirmation-capture",
+  "name": "@lazycuh/angular-confirmation-capture",
   "description": "A singleton, global Angular service to programmatically show a confirmation box to capture an user's consent",
   "version": "1.1.2",
   "author": {
@@ -22,7 +22,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/babybeet/angular-confirmation-capture"
+    "url": "https://github.com/lazycuh/angular-confirmation-capture"
   },
   "devDependencies": {
     "tslib": "^2.3.0"

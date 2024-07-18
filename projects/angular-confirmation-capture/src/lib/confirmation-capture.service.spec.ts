@@ -1,5 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/quotes */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, provideExperimentalZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   assertThat,
@@ -7,14 +8,16 @@ import {
   findElementBySelector,
   fireEvent,
   getElementBySelector
-} from '@babybeet/angular-testing-kit';
+} from '@lazycuh/angular-testing-kit';
 
 import { ConfirmationCaptureService } from './confirmation-capture.service';
 import { ConfirmationCaptureConfiguration } from './confirmation-capture-configuration';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'lc-test',
-  template: `<ng-container></ng-container>`
+  standalone: true,
+  template: `<ng-container />`
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 export class TestComponentRenderer {
@@ -35,8 +38,8 @@ describe(ConfirmationCaptureService.name, () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TestComponentRenderer],
-      providers: [ConfirmationCaptureService]
+      imports: [TestComponentRenderer],
+      providers: [ConfirmationCaptureService, provideExperimentalZonelessChangeDetection()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestComponentRenderer);
@@ -49,7 +52,7 @@ describe(ConfirmationCaptureService.name, () => {
   });
 
   it('Should render a confirmation capture with the provided content', async () => {
-    testComponentRenderer.openConfirmationCapture({
+    void testComponentRenderer.openConfirmationCapture({
       content: 'Do you want to proceed?'
     });
 
@@ -59,7 +62,7 @@ describe(ConfirmationCaptureService.name, () => {
   });
 
   it('Should render a confirmation capture with the provided content as HTML', async () => {
-    testComponentRenderer.openConfirmationCapture({
+    void testComponentRenderer.openConfirmationCapture({
       content: '<strong>Do you want to proceed?</strong>'
     });
 
@@ -70,7 +73,7 @@ describe(ConfirmationCaptureService.name, () => {
   });
 
   it(`Should render a confirmation capture whose cancel button's label has the provided value`, async () => {
-    testComponentRenderer.openConfirmationCapture({
+    void testComponentRenderer.openConfirmationCapture({
       cancelButtonLabel: 'Dismiss'
     });
 
@@ -80,7 +83,7 @@ describe(ConfirmationCaptureService.name, () => {
   });
 
   it(`Should render a confirmation capture whose confirm button's label has the provided value`, async () => {
-    testComponentRenderer.openConfirmationCapture({
+    void testComponentRenderer.openConfirmationCapture({
       confirmButtonLabel: 'Agree'
     });
 
@@ -90,7 +93,7 @@ describe(ConfirmationCaptureService.name, () => {
   });
 
   it('Should use light theme by default', async () => {
-    testComponentRenderer.openConfirmationCapture();
+    void testComponentRenderer.openConfirmationCapture();
 
     await delayBy(16);
 
@@ -98,7 +101,7 @@ describe(ConfirmationCaptureService.name, () => {
   });
 
   it('Should be able to configure a different default theme', async () => {
-    testComponentRenderer.openConfirmationCapture();
+    void testComponentRenderer.openConfirmationCapture();
 
     await delayBy(16);
 
@@ -111,7 +114,7 @@ describe(ConfirmationCaptureService.name, () => {
 
     ConfirmationCaptureService.setDefaultTheme('dark');
 
-    testComponentRenderer.openConfirmationCapture();
+    void testComponentRenderer.openConfirmationCapture();
 
     await delayBy(16);
 
@@ -123,7 +126,7 @@ describe(ConfirmationCaptureService.name, () => {
   });
 
   it('Should render with the provided theme', async () => {
-    testComponentRenderer.openConfirmationCapture({
+    void testComponentRenderer.openConfirmationCapture({
       theme: 'dark'
     });
 
@@ -136,7 +139,7 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(500);
 
-    testComponentRenderer.openConfirmationCapture({
+    void testComponentRenderer.openConfirmationCapture({
       theme: 'light'
     });
 
@@ -147,7 +150,7 @@ describe(ConfirmationCaptureService.name, () => {
   });
 
   it('Should add the provided class name', async () => {
-    testComponentRenderer.openConfirmationCapture({
+    void testComponentRenderer.openConfirmationCapture({
       className: 'hello-world'
     });
 
@@ -157,7 +160,7 @@ describe(ConfirmationCaptureService.name, () => {
   });
 
   it('Should be dismissible by default', async () => {
-    testComponentRenderer.openConfirmationCapture({
+    void testComponentRenderer.openConfirmationCapture({
       content: 'Hello World'
     });
 
@@ -173,7 +176,7 @@ describe(ConfirmationCaptureService.name, () => {
   });
 
   it('Should not be dismissible if `dismissible` is false', async () => {
-    testComponentRenderer.openConfirmationCapture({
+    void testComponentRenderer.openConfirmationCapture({
       content: 'Hello World',
       dismissible: false
     });
@@ -190,7 +193,7 @@ describe(ConfirmationCaptureService.name, () => {
   });
 
   it('Should insert the rendered confirmation capture as the direct child of body element', async () => {
-    testComponentRenderer.openConfirmationCapture();
+    void testComponentRenderer.openConfirmationCapture();
 
     await delayBy(16);
 
@@ -198,7 +201,7 @@ describe(ConfirmationCaptureService.name, () => {
   });
 
   it('Should close opened confirmation capture after cancel button is clicked', async () => {
-    testComponentRenderer.openConfirmationCapture();
+    void testComponentRenderer.openConfirmationCapture();
 
     await delayBy(16);
 
@@ -216,7 +219,7 @@ describe(ConfirmationCaptureService.name, () => {
   it('Should return a promise that resolves to false when cancel button is clicked', async () => {
     const onCancelSpy = jasmine.createSpy();
 
-    testComponentRenderer.openConfirmationCapture().then(onCancelSpy);
+    void testComponentRenderer.openConfirmationCapture().then(onCancelSpy);
 
     await delayBy(16);
 
@@ -231,7 +234,7 @@ describe(ConfirmationCaptureService.name, () => {
   });
 
   it('Should close opened confirmation capture after confirm button is clicked', async () => {
-    testComponentRenderer.openConfirmationCapture();
+    void testComponentRenderer.openConfirmationCapture();
 
     await delayBy(16);
 
@@ -249,7 +252,7 @@ describe(ConfirmationCaptureService.name, () => {
   it('Should return a promise that resolves to true when confirm button is clicked', async () => {
     const onConfirmSpy = jasmine.createSpy();
 
-    testComponentRenderer.openConfirmationCapture().then(onConfirmSpy);
+    void testComponentRenderer.openConfirmationCapture().then(onConfirmSpy);
 
     await delayBy(16);
 
@@ -264,7 +267,7 @@ describe(ConfirmationCaptureService.name, () => {
   });
 
   it('Should use "Cancel" as label for cancel button by default', async () => {
-    testComponentRenderer.openConfirmationCapture();
+    void testComponentRenderer.openConfirmationCapture();
 
     await delayBy(16);
 
@@ -272,7 +275,7 @@ describe(ConfirmationCaptureService.name, () => {
   });
 
   it('Should be able to configure a different default label for cancel button', async () => {
-    testComponentRenderer.openConfirmationCapture();
+    void testComponentRenderer.openConfirmationCapture();
 
     await delayBy(16);
 
@@ -284,7 +287,7 @@ describe(ConfirmationCaptureService.name, () => {
 
     ConfirmationCaptureService.setDefaultCancelButtonLabel('Dismiss');
 
-    testComponentRenderer.openConfirmationCapture();
+    void testComponentRenderer.openConfirmationCapture();
 
     await delayBy(16);
 
@@ -295,7 +298,7 @@ describe(ConfirmationCaptureService.name, () => {
   });
 
   it('Should use "Confirm" as label for confirm button by default', () => {
-    testComponentRenderer.openConfirmationCapture();
+    void testComponentRenderer.openConfirmationCapture();
 
     fixture.detectChanges();
 
@@ -303,7 +306,7 @@ describe(ConfirmationCaptureService.name, () => {
   });
 
   it('Should be able to configure a different default label for confirm button', async () => {
-    testComponentRenderer.openConfirmationCapture();
+    void testComponentRenderer.openConfirmationCapture();
 
     await delayBy(16);
 
@@ -315,7 +318,7 @@ describe(ConfirmationCaptureService.name, () => {
 
     ConfirmationCaptureService.setDefaultConfirmButtonLabel('Yes');
 
-    testComponentRenderer.openConfirmationCapture();
+    void testComponentRenderer.openConfirmationCapture();
 
     await delayBy(16);
 
@@ -332,7 +335,7 @@ describe(ConfirmationCaptureService.name, () => {
 
     window.addEventListener('click', clickHandlerSpy, false);
 
-    testComponentRenderer.openConfirmationCapture();
+    void testComponentRenderer.openConfirmationCapture();
 
     await delayBy(16);
 

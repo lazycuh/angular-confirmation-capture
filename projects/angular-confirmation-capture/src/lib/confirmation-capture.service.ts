@@ -52,20 +52,23 @@ export class ConfirmationCaptureService {
         environmentInjector: this._applicationRef.injector
       });
       const confirmationCaptureComponent = confirmationCaptureComponentRef.instance;
+      const hostElement = confirmationCaptureComponentRef.location.nativeElement as HTMLElement;
 
       confirmationCaptureComponent.setOnConfirmListener(() => {
         resolve(true);
 
-        confirmationCaptureComponentRef.location.nativeElement.onanimationend = () => {
+        hostElement.onanimationend = () => {
           confirmationCaptureComponentRef.destroy();
+          hostElement.onanimationend = null;
         };
       });
 
       confirmationCaptureComponent.setOnCancelListener(() => {
         resolve(false);
 
-        confirmationCaptureComponentRef.location.nativeElement.onanimationend = () => {
+        hostElement.onanimationend = () => {
           confirmationCaptureComponentRef.destroy();
+          hostElement.onanimationend = null;
         };
       });
 

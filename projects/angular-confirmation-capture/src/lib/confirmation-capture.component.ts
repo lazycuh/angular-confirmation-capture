@@ -6,13 +6,13 @@ import { Theme } from './theme';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  // eslint-disable-next-line @angular-eslint/no-host-metadata-property
   host: {
     '[class]':
       // eslint-disable-next-line max-len
       '"lc-confirmation-capture " + (_theme() + " ") + (_enter() ? "enter" : "leave") + (_className() ? " " + _className() : "")'
   },
   selector: 'lc-confirmation-capture',
+  standalone: true,
   styleUrls: ['./confirmation-capture.component.scss'],
   templateUrl: './confirmation-capture.component.html'
 })
@@ -47,10 +47,7 @@ export class ConfirmationCaptureComponent {
     this._className.set(confirmationCaptureConfiguration.className);
     this._confirmButtonLabel.set(confirmationCaptureConfiguration.confirmButtonLabel);
     this._content.set(confirmationCaptureConfiguration.content);
-    this._dismissible =
-      confirmationCaptureConfiguration.dismissible !== undefined
-        ? confirmationCaptureConfiguration.dismissible
-        : this._dismissible;
+    this._dismissible = confirmationCaptureConfiguration.dismissible ?? this._dismissible;
     this._theme.set(confirmationCaptureConfiguration.theme);
     this._enter.set(true);
   }

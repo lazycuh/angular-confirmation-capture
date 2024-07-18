@@ -1,4 +1,4 @@
-# angular-confirmation-capture [![](https://circleci.com/gh/babybeet/angular-confirmation-capture.svg?style=svg&logo=appveyor)](https://app.circleci.com/pipelines/github/babybeet/angular-confirmation-capture?branch=main)
+# angular-confirmation-capture [![](https://circleci.com/gh/lazycuh/angular-confirmation-capture.svg?style=svg&logo=appveyor)](https://app.circleci.com/pipelines/github/lazycuh/angular-confirmation-capture?branch=main)
 
 A singleton, global Angular service to programmatically show a confirmation box to capture an user's consent.
 
@@ -6,7 +6,7 @@ A singleton, global Angular service to programmatically show a confirmation box 
 
 <!-- toc -->
 
-- [Angular version compatibility](#angular-version-compatibility)
+- [Angular compatibility](#angular-compatibility)
 - [Installation](#installation)
 - [Available APIs](#available-apis)
   - [`ConfirmationCaptureService`](#confirmationcaptureservice)
@@ -18,23 +18,25 @@ A singleton, global Angular service to programmatically show a confirmation box 
 
 <!-- tocstop -->
 
-## Angular version compatibility
+## Angular compatibility
 
-- 16+
+| This library | Angular |
+| ------------ | ------- |
+| 1.x.x        | 16 - 18 |
 
 ## Installation
 
 - `npm`
   ```
-  npm i -S @babybeet/angular-confirmation-capture
+  npm i -S @lazycuh/angular-confirmation-capture
   ```
 - `pnpm`
   ```
-  pnpm i -S @babybeet/angular-confirmation-capture
+  pnpm i -S @lazycuh/angular-confirmation-capture
   ```
 - `yarn`
   ```
-  yarn add @babybeet/angular-confirmation-capture
+  yarn add @lazycuh/angular-confirmation-capture
   ```
 
 ## Available APIs
@@ -124,8 +126,8 @@ type Theme = 'dark' | 'light';
 
 ```typescript
 // Import the service into your class to start using it
-import { ConfirmationCaptureService } from '@babybeet/angular-confirmation-capture';
-import { NotificationService } from '@babybeet/angular-notification';
+import { ConfirmationCaptureService } from '@lazycuh/angular-confirmation-capture';
+import { NotificationService } from '@lazycuh/angular-notification';
 
 @Component({
   selector: 'test-component',
