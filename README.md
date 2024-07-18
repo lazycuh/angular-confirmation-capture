@@ -9,12 +9,12 @@ A singleton, global Angular service to programmatically show a confirmation box 
 - [Angular compatibility](#angular-compatibility)
 - [Installation](#installation)
 - [Available APIs](#available-apis)
-  - [`ConfirmationCaptureService`](#confirmationcaptureservice)
-  - [`ConfirmationCaptureConfiguration`](#confirmationcaptureconfiguration)
-  - [`Theme`](#theme)
+  * [`ConfirmationCaptureService`](#confirmationcaptureservice)
+  * [`ConfirmationCaptureConfiguration`](#confirmationcaptureconfiguration)
+  * [`Theme`](#theme)
 - [Example Usage](#example-usage)
-  - [Code example](#code-example)
-  - [Result](#result)
+  * [Code example](#code-example)
+  * [Result](#result)
 
 <!-- tocstop -->
 
