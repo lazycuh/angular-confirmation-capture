@@ -1,7 +1,7 @@
 {
   "name": "@lazycuh/angular-confirmation-capture",
   "description": "A singleton, global Angular service to programmatically show a confirmation box to capture an user's consent",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "author": {
     "name": "Baby Beet"
   },
