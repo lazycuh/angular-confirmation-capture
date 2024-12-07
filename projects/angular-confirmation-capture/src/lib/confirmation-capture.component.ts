@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, signal, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, ViewEncapsulation } from '@angular/core';
+import { DomSanitizer, SafeValue } from '@angular/platform-browser';
 
 import { ConfirmationCaptureConfiguration } from './confirmation-capture-configuration';
 import { Theme } from './theme';
@@ -20,7 +21,7 @@ export class ConfirmationCaptureComponent {
   /**
    * The confirmation message content.
    */
-  protected readonly _content = signal('');
+  protected readonly _content = signal<SafeValue>('');
   protected readonly _cancelButtonLabel = signal<string | undefined>(undefined);
   protected readonly _confirmButtonLabel = signal<string | undefined>(undefined);
 
@@ -35,6 +36,8 @@ export class ConfirmationCaptureComponent {
   protected readonly _theme = signal<Theme | undefined>(undefined);
   protected readonly _className = signal<string | undefined>(undefined);
 
+  private readonly _domSanitizer = inject(DomSanitizer);
+
   /**
    * Whether or not clicking on the backdrop will dismiss the confirmation capture.
    */
@@ -46,7 +49,13 @@ export class ConfirmationCaptureComponent {
     this._cancelButtonLabel.set(confirmationCaptureConfiguration.cancelButtonLabel);
     this._className.set(confirmationCaptureConfiguration.className);
     this._confirmButtonLabel.set(confirmationCaptureConfiguration.confirmButtonLabel);
-    this._content.set(confirmationCaptureConfiguration.content);
+
+    if (confirmationCaptureConfiguration.bypassHtmlSanitization === true) {
+      this._content.set(this._domSanitizer.bypassSecurityTrustHtml(confirmationCaptureConfiguration.content));
+    } else {
+      this._content.set(confirmationCaptureConfiguration.content);
+    }
+
     this._dismissible = confirmationCaptureConfiguration.dismissible ?? this._dismissible;
     this._theme.set(confirmationCaptureConfiguration.theme);
     this._enter.set(true);

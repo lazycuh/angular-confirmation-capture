@@ -42,7 +42,7 @@ jobs:
       - run:
           name: Installing dependencies
           command: |
-            pnpm install
+            pnpm install --force
       - save_cache:
           name: Saving pnpm package cache
           key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}

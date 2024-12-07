@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/quotes */
 import { ChangeDetectionStrategy, Component, provideExperimentalZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -70,6 +69,31 @@ describe(ConfirmationCaptureService.name, () => {
 
     assertThat(`${classSelectorPrefix}__content`).hasInnerHtml('<strong>Do you want to proceed?</strong>');
     assertThat(`${classSelectorPrefix}__content`).hasTextContent('Do you want to proceed?');
+  });
+
+  it('Should sanitize/strip out inline style by default', async () => {
+    void testComponentRenderer.openConfirmationCapture({
+      content: '<strong style="font-weight: bold">Hello World</strong>'
+    });
+
+    await delayBy(16);
+
+    assertThat(`${classSelectorPrefix}__content`).hasInnerHtml('<strong>Hello World</strong>');
+    assertThat(`${classSelectorPrefix}__content`).hasTextContent('Hello World');
+  });
+
+  it('Should not sanitize/strip out inline style when bypass option is provided', async () => {
+    void testComponentRenderer.openConfirmationCapture({
+      bypassHtmlSanitization: true,
+      content: '<strong style="font-weight: bold">Hello World</strong>'
+    });
+
+    await delayBy(16);
+
+    assertThat(`${classSelectorPrefix}__content`).hasInnerHtml(
+      '<strong style="font-weight: bold">Hello World</strong>'
+    );
+    assertThat(`${classSelectorPrefix}__content`).hasTextContent('Hello World');
   });
 
   it(`Should render a confirmation capture whose cancel button's label has the provided value`, async () => {
