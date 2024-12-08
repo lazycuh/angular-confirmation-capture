@@ -15,7 +15,6 @@ import { ConfirmationCaptureConfiguration } from './confirmation-capture-configu
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'lc-test',
-  standalone: true,
   template: `<ng-container />`
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix

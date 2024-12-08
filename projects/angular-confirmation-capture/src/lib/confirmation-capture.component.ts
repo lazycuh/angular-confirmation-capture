@@ -13,7 +13,6 @@ import { Theme } from './theme';
       '"lc-confirmation-capture " + (_theme() + " ") + (_enter() ? "enter" : "leave") + (_className() ? " " + _className() : "")'
   },
   selector: 'lc-confirmation-capture',
-  standalone: true,
   styleUrls: ['./confirmation-capture.component.scss'],
   templateUrl: './confirmation-capture.component.html'
 })
