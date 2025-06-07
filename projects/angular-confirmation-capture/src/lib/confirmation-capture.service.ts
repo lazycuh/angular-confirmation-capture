@@ -1,4 +1,4 @@
-import { ApplicationRef, createComponent, Injectable } from '@angular/core';
+import { ApplicationRef, createComponent, inject, Injectable } from '@angular/core';
 
 import { ConfirmationCaptureComponent } from './confirmation-capture.component';
 import { ConfirmationCaptureConfiguration } from './confirmation-capture-configuration';
@@ -15,7 +15,7 @@ export class ConfirmationCaptureService {
   private static _defaultCancelButtonLabel = 'Cancel';
   private static _defaultConfirmButtonLabel = 'Confirm';
 
-  constructor(private readonly _applicationRef: ApplicationRef) {}
+  private readonly _applicationRef = inject(ApplicationRef);
 
   /**
    * Set the default theme that will be used for all confirmation captures created in the future.
@@ -72,17 +72,11 @@ export class ConfirmationCaptureService {
         };
       });
 
-      if (confirmationCaptureConfiguration.theme === undefined) {
-        confirmationCaptureConfiguration.theme = ConfirmationCaptureService._defaultTheme;
-      }
+      confirmationCaptureConfiguration.theme ??= ConfirmationCaptureService._defaultTheme;
 
-      if (confirmationCaptureConfiguration.cancelButtonLabel === undefined) {
-        confirmationCaptureConfiguration.cancelButtonLabel = ConfirmationCaptureService._defaultCancelButtonLabel;
-      }
+      confirmationCaptureConfiguration.cancelButtonLabel ??= ConfirmationCaptureService._defaultCancelButtonLabel;
 
-      if (confirmationCaptureConfiguration.confirmButtonLabel === undefined) {
-        confirmationCaptureConfiguration.confirmButtonLabel = ConfirmationCaptureService._defaultConfirmButtonLabel;
-      }
+      confirmationCaptureConfiguration.confirmButtonLabel ??= ConfirmationCaptureService._defaultConfirmButtonLabel;
 
       confirmationCaptureComponent.open(confirmationCaptureConfiguration);
 
