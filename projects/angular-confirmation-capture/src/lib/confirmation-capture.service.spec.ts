@@ -1,29 +1,26 @@
-/* eslint-disable @typescript-eslint/quotes */
-import { ChangeDetectionStrategy, Component, provideExperimentalZonelessChangeDetection } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-  assertThat,
-  delayBy,
-  findElementBySelector,
-  fireEvent,
-  getElementBySelector
-} from '@lazycuh/angular-testing-kit';
+/* eslint-disable @stylistic/quotes */
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { fireEvent, screen } from '@testing-library/angular';
+import userEvent from '@testing-library/user-event';
+import { delayBy, renderComponent } from 'projects/angular-confirmation-capture/test/helpers';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { ConfirmationCaptureService } from './confirmation-capture.service';
 import { ConfirmationCaptureConfiguration } from './confirmation-capture-configuration';
 
+const DEFAULT_CONTENT = 'Are you sure?';
+
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'lc-test',
-  template: `<ng-container />`
+  template: '<ng-container />'
 })
-// eslint-disable-next-line @angular-eslint/component-class-suffix
 export class TestComponentRenderer {
-  constructor(readonly service: ConfirmationCaptureService) {}
+  readonly service = inject(ConfirmationCaptureService);
 
   openConfirmationCapture(config: Partial<ConfirmationCaptureConfiguration> = {}) {
     return this.service.open({
-      content: 'Are you sure?',
+      content: DEFAULT_CONTENT,
       ...config
     });
   }
@@ -31,22 +28,11 @@ export class TestComponentRenderer {
 
 describe(ConfirmationCaptureService.name, () => {
   const classSelectorPrefix = '.lc-confirmation-capture';
-  let fixture: ComponentFixture<TestComponentRenderer>;
   let testComponentRenderer: TestComponentRenderer;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [TestComponentRenderer],
-      providers: [ConfirmationCaptureService, provideExperimentalZonelessChangeDetection()]
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(TestComponentRenderer);
-    testComponentRenderer = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  afterEach(() => {
-    fixture.destroy();
+    const renderResult = await renderComponent(TestComponentRenderer);
+    testComponentRenderer = renderResult.fixture.componentInstance;
   });
 
   it('Should render a confirmation capture with the provided content', async () => {
@@ -56,7 +42,7 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}__content`).hasTextContent('Do you want to proceed?');
+    expect(screen.getByText('Do you want to proceed?')).toBeInTheDocument();
   });
 
   it('Should render a confirmation capture with the provided content as HTML', async () => {
@@ -66,8 +52,9 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}__content`).hasInnerHtml('<strong>Do you want to proceed?</strong>');
-    assertThat(`${classSelectorPrefix}__content`).hasTextContent('Do you want to proceed?');
+    expect(document.body.querySelector(`${classSelectorPrefix}__content`)!.innerHTML).toEqual(
+      '<strong>Do you want to proceed?</strong>'
+    );
   });
 
   it('Should sanitize/strip out inline style by default', async () => {
@@ -77,8 +64,9 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}__content`).hasInnerHtml('<strong>Hello World</strong>');
-    assertThat(`${classSelectorPrefix}__content`).hasTextContent('Hello World');
+    expect(document.body.querySelector(`${classSelectorPrefix}__content`)!.innerHTML).toEqual(
+      '<strong>Hello World</strong>'
+    );
   });
 
   it('Should not sanitize/strip out inline style when bypass option is provided', async () => {
@@ -89,30 +77,29 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}__content`).hasInnerHtml(
+    expect(document.body.querySelector(`${classSelectorPrefix}__content`)!.innerHTML).toEqual(
       '<strong style="font-weight: bold">Hello World</strong>'
     );
-    assertThat(`${classSelectorPrefix}__content`).hasTextContent('Hello World');
   });
 
-  it(`Should render a confirmation capture whose cancel button's label has the provided value`, async () => {
+  it("Should render a confirmation capture whose cancel button's label has the provided value", async () => {
     void testComponentRenderer.openConfirmationCapture({
       cancelButtonLabel: 'Dismiss'
     });
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}__action.cancel`).hasTextContentMatching('Dismiss');
+    expect(screen.getByText('Dismiss')).toBeInTheDocument();
   });
 
-  it(`Should render a confirmation capture whose confirm button's label has the provided value`, async () => {
+  it("Should render a confirmation capture whose confirm button's label has the provided value", async () => {
     void testComponentRenderer.openConfirmationCapture({
       confirmButtonLabel: 'Agree'
     });
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}__action.confirm`).hasTextContentMatching('Agree');
+    expect(screen.getByText('Agree')).toBeInTheDocument();
   });
 
   it('Should use light theme by default', async () => {
@@ -120,7 +107,7 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}.light`).exists();
+    expect(document.body.querySelector(`${classSelectorPrefix}.light-theme`)).toBeInTheDocument();
   });
 
   it('Should be able to configure a different default theme', async () => {
@@ -128,10 +115,11 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}.dark`).doesNotExist();
-    assertThat(`${classSelectorPrefix}.light`).exists();
+    expect(document.body.querySelector(`${classSelectorPrefix}.dark-theme`)).not.toBeInTheDocument();
+    expect(document.body.querySelector(`${classSelectorPrefix}.light-theme`)).toBeInTheDocument();
 
-    fireEvent(`${classSelectorPrefix}__action.cancel`, 'click');
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Cancel'));
 
     await delayBy(500);
 
@@ -141,8 +129,8 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}.light`).doesNotExist();
-    assertThat(`${classSelectorPrefix}.dark`).exists();
+    expect(document.body.querySelector(`${classSelectorPrefix}.light-theme`)).not.toBeInTheDocument();
+    expect(document.body.querySelector(`${classSelectorPrefix}.dark-theme`)).toBeInTheDocument();
 
     // Set back to the expected default
     ConfirmationCaptureService.setDefaultTheme('light');
@@ -155,10 +143,11 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}.light`).doesNotExist();
-    assertThat(`${classSelectorPrefix}.dark`).exists();
+    expect(document.body.querySelector(`${classSelectorPrefix}.light-theme`)).not.toBeInTheDocument();
+    expect(document.body.querySelector(`${classSelectorPrefix}.dark-theme`)).toBeInTheDocument();
 
-    fireEvent(`${classSelectorPrefix}__action.cancel`, 'click');
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Cancel'));
 
     await delayBy(500);
 
@@ -168,8 +157,8 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}.dark`).doesNotExist();
-    assertThat(`${classSelectorPrefix}.light`).exists();
+    expect(document.body.querySelector(`${classSelectorPrefix}.dark-theme`)).not.toBeInTheDocument();
+    expect(document.body.querySelector(`${classSelectorPrefix}.light-theme`)).toBeInTheDocument();
   });
 
   it('Should add the provided class name', async () => {
@@ -179,7 +168,7 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}.hello-world`).exists();
+    expect(document.body.querySelector(`${classSelectorPrefix}.hello-world`)).toBeInTheDocument();
   });
 
   it('Should be dismissible by default', async () => {
@@ -189,13 +178,13 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}__content`.trim()).hasTextContent('Hello World');
+    expect(screen.getByText('Hello World')).toBeInTheDocument();
 
-    fireEvent(`${classSelectorPrefix}__backdrop`, 'click');
+    fireEvent(document.querySelector(`${classSelectorPrefix}__backdrop`)!, new CustomEvent('click'));
 
     await delayBy(500);
 
-    assertThat(classSelectorPrefix).doesNotExist();
+    expect(screen.queryByText('Hello World')).not.toBeInTheDocument();
   });
 
   it('Should not be dismissible if `dismissible` is false', async () => {
@@ -206,13 +195,13 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}__content`).hasTextContent('Hello World');
+    expect(screen.getByText('Hello World')).toBeInTheDocument();
 
-    fireEvent(`${classSelectorPrefix}__backdrop`, 'click');
+    fireEvent(document.querySelector(`${classSelectorPrefix}__backdrop`)!, new CustomEvent('click'));
 
     await delayBy(500);
 
-    expect(findElementBySelector(classSelectorPrefix)).not.toBeNull();
+    expect(screen.getByText('Hello World')).toBeInTheDocument();
   });
 
   it('Should insert the rendered confirmation capture as the direct child of body element', async () => {
@@ -220,7 +209,7 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    expect(document.body.lastElementChild).toEqual(getElementBySelector(classSelectorPrefix));
+    expect(document.body.lastElementChild).toEqual(document.body.querySelector(classSelectorPrefix));
   });
 
   it('Should close opened confirmation capture after cancel button is clicked', async () => {
@@ -228,27 +217,25 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(classSelectorPrefix).exists();
+    expect(screen.getByText(DEFAULT_CONTENT)).toBeInTheDocument();
 
-    fireEvent(`${classSelectorPrefix}__action.cancel`, 'click');
-
-    fixture.detectChanges();
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Cancel'));
 
     await delayBy(500);
 
-    assertThat(classSelectorPrefix).doesNotExist();
+    expect(screen.queryByText(DEFAULT_CONTENT)).not.toBeInTheDocument();
   });
 
   it('Should return a promise that resolves to false when cancel button is clicked', async () => {
-    const onCancelSpy = jasmine.createSpy();
+    const onCancelSpy = vi.fn();
 
     void testComponentRenderer.openConfirmationCapture().then(onCancelSpy);
 
     await delayBy(16);
 
-    fireEvent(`${classSelectorPrefix}__action.cancel`, 'click');
-
-    fixture.detectChanges();
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Cancel'));
 
     await delayBy(1000);
 
@@ -261,27 +248,25 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    expect(findElementBySelector(classSelectorPrefix)).not.toBeNull();
+    expect(screen.getByText(DEFAULT_CONTENT)).toBeInTheDocument();
 
-    fireEvent(`${classSelectorPrefix}__action.confirm`, 'click');
-
-    fixture.detectChanges();
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Confirm'));
 
     await delayBy(500);
 
-    assertThat(classSelectorPrefix).doesNotExist();
+    expect(screen.queryByText(DEFAULT_CONTENT)).not.toBeInTheDocument();
   });
 
   it('Should return a promise that resolves to true when confirm button is clicked', async () => {
-    const onConfirmSpy = jasmine.createSpy();
+    const onConfirmSpy = vi.fn();
 
     void testComponentRenderer.openConfirmationCapture().then(onConfirmSpy);
 
     await delayBy(16);
 
-    fireEvent(`${classSelectorPrefix}__action.confirm`, 'click');
-
-    fixture.detectChanges();
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Confirm'));
 
     await delayBy(500);
 
@@ -294,7 +279,7 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}__action.cancel`).hasTextContentMatching('Cancel');
+    expect(screen.getByText('Cancel')).toBeInTheDocument();
   });
 
   it('Should be able to configure a different default label for cancel button', async () => {
@@ -302,9 +287,10 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}__action.cancel`).hasTextContentMatching('Cancel');
+    expect(screen.getByText('Cancel')).toBeInTheDocument();
 
-    fireEvent(`${classSelectorPrefix}__action.cancel`, 'click');
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Cancel'));
 
     await delayBy(500);
 
@@ -314,18 +300,19 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}__action.cancel`).hasTextContentMatching('Dismiss');
+    expect(screen.queryByText('Cancel')).not.toBeInTheDocument();
+    expect(screen.getByText('Dismiss')).toBeInTheDocument();
 
     // Set back to the expected default
     ConfirmationCaptureService.setDefaultCancelButtonLabel('Cancel');
   });
 
-  it('Should use "Confirm" as label for confirm button by default', () => {
+  it('Should use "Confirm" as label for confirm button by default', async () => {
     void testComponentRenderer.openConfirmationCapture();
 
-    fixture.detectChanges();
+    await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}__action.confirm`).hasTextContentMatching('Confirm');
+    expect(screen.getByText('Confirm')).toBeInTheDocument();
   });
 
   it('Should be able to configure a different default label for confirm button', async () => {
@@ -333,9 +320,10 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}__action.confirm`).hasTextContentMatching('Confirm');
+    expect(screen.getByText('Confirm')).toBeInTheDocument();
 
-    fireEvent(`${classSelectorPrefix}__action.confirm`, 'click');
+    const user = userEvent.setup();
+    await user.click(screen.getByText('Confirm'));
 
     await delayBy(500);
 
@@ -345,16 +333,17 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}__action.confirm`).hasTextContentMatching('Yes');
+    expect(screen.queryByText('Confirm')).not.toBeInTheDocument();
+    expect(screen.getByText('Yes')).toBeInTheDocument();
 
     // Set back to the expected default
     ConfirmationCaptureService.setDefaultConfirmButtonLabel('Confirm');
   });
 
   it('Should stop click events from bubbling to window', async () => {
-    const clickHandlerSpy = jasmine.createSpy();
+    const clickHandlerSpy = vi.fn();
 
-    const stopPropagationSpy = spyOn(CustomEvent.prototype, 'stopPropagation').and.callThrough();
+    const stopPropagationSpy = vi.spyOn(CustomEvent.prototype, 'stopPropagation');
 
     window.addEventListener('click', clickHandlerSpy, false);
 
@@ -362,9 +351,9 @@ describe(ConfirmationCaptureService.name, () => {
 
     await delayBy(16);
 
-    assertThat(`${classSelectorPrefix}__content`).hasTextContent('Are you sure?');
+    expect(screen.getByText(DEFAULT_CONTENT)).toBeInTheDocument();
 
-    fireEvent(`${classSelectorPrefix}__backdrop`, 'click');
+    fireEvent(document.body.querySelector(`${classSelectorPrefix}__backdrop`)!, new CustomEvent('click'));
 
     await delayBy(16);
 

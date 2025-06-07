@@ -3,11 +3,11 @@
   "description": "A singleton, global Angular service to programmatically show a confirmation box to capture an user's consent",
   "version": "2.0.0",
   "author": {
-    "name": "Baby Beet"
+    "name": "Lazy Cuh"
   },
   "peerDependencies": {
-    "@angular/common": "19",
-    "@angular/core": "19"
+    "@angular/common": "20",
+    "@angular/core": "20"
   },
   "keywords": [
     "angular",

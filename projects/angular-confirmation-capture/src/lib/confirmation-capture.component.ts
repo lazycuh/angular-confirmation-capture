@@ -10,7 +10,7 @@ import { Theme } from './theme';
   host: {
     '[class]':
       // eslint-disable-next-line max-len
-      '"lc-confirmation-capture " + (_theme() + " ") + (_enter() ? "enter" : "leave") + (_className() ? " " + _className() : "")'
+      '"lc-confirmation-capture " + (_theme() + "-theme ") + (_isEntering() ? "is-entering" : "is-leaving") + (_className() ? " " + _className() : "")'
   },
   selector: 'lc-confirmation-capture',
   styleUrls: ['./confirmation-capture.component.scss'],
@@ -27,11 +27,8 @@ export class ConfirmationCaptureComponent {
   /**
    * Whether or not the confirmation capture is entering into view.
    */
-  protected readonly _enter = signal(false);
+  protected readonly _isEntering = signal(false);
 
-  /**
-   * Whether or not the notification is entering into view.
-   */
   protected readonly _theme = signal<Theme | undefined>(undefined);
   protected readonly _className = signal<string | undefined>(undefined);
 
@@ -57,7 +54,7 @@ export class ConfirmationCaptureComponent {
 
     this._dismissible = confirmationCaptureConfiguration.dismissible ?? this._dismissible;
     this._theme.set(confirmationCaptureConfiguration.theme);
-    this._enter.set(true);
+    this._isEntering.set(true);
   }
 
   setOnConfirmListener(fn: () => void) {
@@ -72,7 +69,7 @@ export class ConfirmationCaptureComponent {
     event.stopPropagation();
 
     if (this._dismissible) {
-      this._enter.set(false);
+      this._isEntering.set(false);
       this._onCancelListener?.();
     }
   }
@@ -80,14 +77,14 @@ export class ConfirmationCaptureComponent {
   protected _onCancel(event: Event) {
     event.stopPropagation();
 
-    this._enter.set(false);
+    this._isEntering.set(false);
     this._onCancelListener?.();
   }
 
   protected _onConfirm(event: Event) {
     event.stopPropagation();
 
-    this._enter.set(false);
+    this._isEntering.set(false);
     this._onConfirmListener?.();
   }
 }

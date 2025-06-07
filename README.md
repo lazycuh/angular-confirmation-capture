@@ -22,6 +22,7 @@ A singleton, global Angular service to programmatically show a confirmation box 
 
 | This library | Angular |
 | ------------ | ------- |
+| 3.x.x        | 20.x.x  |
 | 2.x.x        | 19.x.x  |
 | 1.x.x        | 16 - 18 |
 

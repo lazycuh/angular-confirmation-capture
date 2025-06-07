@@ -20,15 +20,15 @@ $easing-function: cubic-bezier(0.04, 0.54, 0.25, 1);
     z-index: 9999;
     animation: 0.25s $easing-function forwards;
 
-    &.enter .lc-confirmation-capture__body {
-        animation-name: confirmation-capture-animate-body-enter;
+    &.is-entering .lc-confirmation-capture__body {
+        animation-name: confirmation-capture-animate-body-entering;
     }
 
-    &.leave .lc-confirmation-capture__body {
-        animation-name: confirmation-capture-animate-body-leave;
+    &.is-leaving .lc-confirmation-capture__body {
+        animation-name: confirmation-capture-animate-body-leaving;
     }
 
-    &.light {
+    &.light-theme {
         --confirmation-capture-bg-color: #fff;
         --confirmation-capture-text-color: #000;
         --confirmation-capture-shadow: 0px 0.5rem 0.75rem rgba(0, 0, 0, 0.08), 0px 0.25rem 3rem rgba(0, 0, 0, 0.08);
@@ -40,20 +40,20 @@ $easing-function: cubic-bezier(0.04, 0.54, 0.25, 1);
         --confirmation-capture-divider-color: rgba(0, 0, 0, 0.04);
     }
 
-    &.dark {
+    &.dark-theme {
         --confirmation-capture-bg-color: #353535;
         --confirmation-capture-text-color: #fff;
         --confirmation-capture-shadow: 0px 0.5rem 0.75rem rgba(0, 0, 0, 0.15), 0px 0.25rem 3rem rgba(0, 0, 0, 0.15);
         --confirmation-capture-cancel-btn-hover-bg-color: #444;
         --confirmation-capture-cancel-btn-text-color: #e8d0ff;
-        --confirmation-capture-confirm-btn-bg-color: #1d6069;
+        --confirmation-capture-confirm-btn-bg-color: #078d8c;
         --confirmation-capture-confirm-btn-hover-bg-color: #277e8a;
         --confirmation-capture-confirm-btn-text-color: #fff;
         --confirmation-capture-divider-color: rgba(255, 255, 255, 0.08);
     }
 }
 
-@keyframes confirmation-capture-animate-body-enter {
+@keyframes confirmation-capture-animate-body-entering {
     from {
         transform: translateY(60%);
         opacity: 0;
@@ -65,7 +65,7 @@ $easing-function: cubic-bezier(0.04, 0.54, 0.25, 1);
     }
 }
 
-@keyframes confirmation-capture-animate-body-leave {
+@keyframes confirmation-capture-animate-body-leaving {
     from {
         transform: translateY(0);
         opacity: 1;
